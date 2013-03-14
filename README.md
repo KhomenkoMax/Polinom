@@ -1,61 +1,183 @@
-Polinom
-=======
 
-Klass Polinom(C++)
-#include <cstdlib>
 #include <iostream>
-class Polinom
-{protected:
-     int deg;//степінь полінома
-     double*koef; //вказівник на масив коефіцієнтів полінома
-                  //koef[i] - коєфіцієнт при i-й степені,
-                  //koef[0] - коєфіцієнт при нульовій степені  
- Public:
-        Polinom();//онструктор без параметрів
-        Polinom(int newDeg, double*newKoef);
-        Polynom(const Polynom &); //копіюючий контсруктор
-    ~Polynom(); //деструктор 
-    int getDeg(); //функція отримання степеня полінома
-    double getKoef(); //функція отримання коефіцієнта при i-ому степені
-    void setKoef(double*newKoef); //функція задання коєфіцієнта при i-ому  
-    void setDeg(int newDeg);              //степені, повертає степінь полінома
-    Polynom operator + (const Polynom &);   //оператор суми двох поліномів
-    Polynom operator = (const Polynom &);   //оператор присвоювання
-    friend Polynom MultConst(double, Polynom &); //функція добутку полінома
-                                     //на константу
-    void InputPolynom();    //функція ввода полінома
-    void OutputPolynom();   //функція вивода полінома
-      };
-    //конструктр без параметрів: створює поліном нульового степеня
-    //з коефіцієнтом при ннульовому степені рівним нулю
-    Polynom::Polynom()
-    {
-    deg=0;
-    koef=newKoef[deg+1];
-    koef[0]=0.0;
-    //Конструктор з параметрами 
-    //enewDeg - степінь створюваного полінома
-    //newKoef - drfpsdybr yf newDeg+1 - елементний масив з коефіцієнтами
-    //полінома де newKoef[i] - коефіцієнт при і-ому степені
-    //  newkoef[0] - коефіцієнт при нульовому степені
-    // в результаті степінь полінома буде найбільшим номером нульового елемента 
-    //масива newKoef і менший або рівний newDeg(за означенням полінома
-    Polynom::Polynom( int newВg, double *newKoef)
-    {
-    deg=0;
-    for(int i=0;i<=newDeg;i++)
-        if(newKoef[i]!=0) 
-        deg=i;//ініціалізація змінної степеня
-    koef=newKoef[i+1];
-    for(i=0;i<=deg;i++)
-        koef[i]=newKoef[i]; //ініціалізація масиву коефіцієнтів
-}
-}
-
+#include <cstdlib>
+#include <math.h>
 using namespace std;
 
-int main(int argc, char *argv[])
+#define MAX_P_LENGTH 5
+
+class polynom
 {
-    system("PAUSE");
-    return EXIT_SUCCESS;
+private:
+double a[MAX_P_LENGTH];
+
+public:
+polynom() { for(int i=0;i<MAX_P_LENGTH;i++) a[i]=0.0; }
+
+
+polynom(const polynom & p) {for(int i=0;i<MAX_P_LENGTH;i++) a[i]=p.a[i];}
+
+
+double operator()(double x);
+friend polynom operator+(polynom a, polynom b);
+friend polynom operator-(polynom a, polynom b);
+friend polynom operator+(polynom a, double d);
+friend polynom operator+(double d, polynom a);
+friend polynom operator*(polynom a, double d);
+friend polynom operator*(double d, polynom a);
+friend ostream& operator<<(ostream&o, polynom p);
+friend istream& operator>>(istream&s, polynom&p);
+};
+
+double polynom::operator()(double x)
+{
+double mnozh=1;
+double sum=a[MAX_P_LENGTH-1];
+for (int i=MAX_P_LENGTH-2;i>=0;i--)
+{
+sum+=mnozh*a[i];
+mnozh*=x;
 }
+return sum;
+}
+
+
+polynom operator+(polynom a, polynom b)
+{
+polynom p;
+for(int i=0;i<MAX_P_LENGTH;i++)
+p.a[i]=a.a[i]+b.a[i];
+return p;
+}
+
+polynom operator-(polynom a, polynom b)
+{
+polynom p;
+for(int i=0;i<MAX_P_LENGTH;i++)
+p.a[i]=a.a[i]-b.a[i];
+return p;
+}
+
+polynom operator+(polynom a, double d)
+{
+polynom p;
+for(int i=0;i<MAX_P_LENGTH;i++)
+p.a[i]=a.a[i]+d;
+return p;
+}
+
+polynom operator+(double d, polynom a)
+{
+polynom p;
+for(int i=0;i<MAX_P_LENGTH;i++)
+p.a[i]=a.a[i]+d;
+return p;
+}
+
+polynom operator*(polynom a, double d)
+{
+polynom p;
+for(int i=0;i<MAX_P_LENGTH;i++)
+p.a[i]=a.a[i]*d;
+return p;
+}
+
+polynom operator*(double d, polynom a)
+{
+polynom p;
+for(int i=0;i<MAX_P_LENGTH;i++)
+p.a[i]=a.a[i]*d;
+return p;
+}
+
+ostream& operator<<(ostream&o, polynom p)
+{
+bool first_el=true;
+for(int i=MAX_P_LENGTH-1;i>0;i--)
+if (p.a[i]!=0.0) 
+{
+if (!first_el) o<<"\t+ "; else first_el=false;
+
+if (p.a[i]!=1.0) o<<p.a[i];
+
+
+if(i>1) o<<"x^"<<i;
+else o<<"x";
+}
+
+if (!first_el) o<<"\t+ ";
+o<<p.a[0];
+
+return o;
+}
+
+istream& operator>>(istream&s, polynom&p)
+{
+for(int i=0;i<MAX_P_LENGTH;i++)
+{
+cout<<"a["<<i<<"]=";
+s>>p.a[i];
+}
+return s;
+}
+
+
+int main()
+{
+int n;
+double x=1.0;
+polynom* m;
+
+polynom**m = new polynom*[i];
+
+
+for(int i=0;i<4;i++) 
+{ 
+m[i] = new polynom ((rand()%1000)/100.0); 
+}
+
+polynom a,b;
+double d;
+
+cout<<"\n‚a:";
+cin>>a;
+cout<<"‚d (double):";
+cin>>d;
+
+cout<<"\n\n‚a:\n"<<a;
+cout<<"\n * "<<d<<" =";
+b=a*d;
+cout<<"\n"<<b;
+cout<<"\n + "<<d<<" =";
+b=b+d;
+cout<<"\n"<<b;
+cout<<"\n - \n"<<a<<" =";
+b=b-a;
+cout<<"\n"<<b;
+
+cout<<"\n‚n :";
+cin>>n;
+m = new polynom[n];
+
+cout<<"\n‚¢¥¤¨â¥ x:";
+cin>>x;
+
+while(x!=0.0){
+  if (x==0.0) break;
+  for(int i=0;i<n;i++)
+  {
+
+    cout<<"\np"<<i<<" = "<<m[i]<<" = "<<m[i](x);
+
+    if(m[i](x) >= m[i](x+0.001) && m[i](x) >= m[i](x-0.001)) // max
+       cout<<"\tmax: "<<m[i];
+     		
+    if(m[i](x) <= m[i](x+0.001) && m[i](x) <= m[i](x-0.001)) // min
+       cout<<"\tmin: "<<m[i];
+  }
+  cout<<"\n‚¢¥¤¨â¥ x:";
+  cin>>x;
+};
+
+} // end of main
+
