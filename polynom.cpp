@@ -1,224 +1,158 @@
-#include <cstdlib>
 #include <iostream>
+#include <conio.h>
+#include <math.h>
+#include <malloc.h>
 
 using namespace std;
-
-#include <iostream.h>
-#include <memory.h>
+class polynom
+{
+    private:
+        int n;
+        double *x;
+    public:
+        polynom();
+        ~polynom();
+        polynom(int n,double *x);
+        double cs();
  
-//класс Polynom
-class Polynom{
-private:
-    unsigned int deg; //степень полинома
-    double *koef; //указатель на массив коэффициентов полинома
-                  //koef[i] - коэффициент при i-й степени,
-                  //koef[0] - коэффициент при нулевой степени
-    void CorrectDeg(); // функция корректировки степени полинома
+        polynom &operator=(const polynom &Object); // Перегрузка =
+        polynom operator+(polynom &);    // Сума
+        polynom operator-(polynom &);    // Різниця
+        polynom operator*(polynom &);    // Множення
  
-public:
-    Polynom(); //конструктор без параметров
-    Polynom(unsigned int, double*); //конструктор с параметрами
-    Polynom(const Polynom &); //копирующий контсруктор
-    Polynom::~Polynom(); //деструктор
+        // Перегрузка оператора << для вивода
+        friend ostream &operator<<(ostream &, polynom &);
+        // Перегрузка оператора >> для ввода матриці(масиву)
+        friend istream &operator>>(istream &, polynom &);
  
-    unsigned int GetDeg(); //функция получения степени полинома
-    double GetKoef(unsigned int); //функция получения коэффициента при i-й степени
-    unsigned int SetKoef(double, unsigned int); //функция задания коэффициента при i-й 
-                                                //степени, возвращает степень полинома
-    Polynom operator + (const Polynom &);   //оператор сложения двух полиномов
-    Polynom operator = (const Polynom &);   //оператор присваивания
-    friend Polynom MultConst(double, Polynom &); //дружественная функция умножения полинома
-                                              //на константу
-    void InputPolynom();    //функция ввода полинома
-    void OutputPolynom();   //функция вывода полинома
 };
  
-// конструктор без параметров: создается полином нулевой степени
-// с коэффициентом при нулевой степени равным нулю
-Polynom::Polynom(){
-    deg=0;
-    koef=new double[deg+1];
-    koef[0]=0.0;
+polynom::polynom(int nn,double *xx)
+{
+    unsigned char i;
+    n=nn;
+    x=new double[n+1];
+    for(i=0;i<=n;x[i++]=xx[i]);
 }
  
-// конструктор с параметрами
-// new_deg - степень создаваемого полинома
-// newkoef - указатель на new_deg+1 - элементный массив с коэффициентами 
-//           полинома, где newkoef[i] - коффициент при i-й степени
-//           и newkoef[0] - коэффициент при нулевой степени
-// В результате степень полинома будет наибольшим номером ненулевого
-// элемента массива new_koef и меньше или равна new_deg (по определению степени полинома)
-Polynom::Polynom(unsigned int new_deg, double *new_koef)
+polynom::polynom()
 {
-    deg=0;
-    for(int i=0;i<=new_deg;i++)
-        if(new_koef[i]!=0) deg=i;   //инициализация переменной степени
-    koef=new double[deg+1];
-    for(i=0;i<=deg;i++)
-        koef[i]=new_koef[i]; //инициализация массива коэффициентов
+    double x[1]={0};
+    polynom::polynom(0,x);
 }
  
-//копирующий конструктор
-Polynom::Polynom(const Polynom &f)
+polynom::~polynom()
 {
-    deg=f.deg;
-    koef=new double[deg+1];
-    for(int i=0;i<=deg;i++)
-        koef[i]=f.koef[i];
+    delete []x;
 }
  
-//деструктор
-Polynom::~Polynom()
+double polynom::cs()
 {
-    delete[] koef;
-}
-// функция получения степени полинома
-unsigned int Polynom::GetDeg()
-{
-    return deg;
+    return x[0];
 }
  
-// функция получения коэффициента при i-й степени
-double Polynom::GetKoef(unsigned int i)
-{
-    if(i<=deg) 
-        return koef[i];
-    else 
-        return 0.0;
-}
  
-// функция задания коэффициента при i-й степени
-unsigned int Polynom::SetKoef(double new_koef, unsigned int i)
+// Перегрузка оператора =
+polynom& polynom::operator=(const polynom &Object)
 {
-    if(i<=deg) koef[i]=new_koef;
-    else return deg;
-    CorrectDeg();   
-    return deg;
-}
- 
-//оператор сложения двух полиномов
-Polynom Polynom::operator + (const Polynom &t)
-{
-    int i;
-    Polynom *result;
- 
-    if(deg>=t.deg){ //если степень первого полинома больше степени второго
-        result=new Polynom(deg,koef);
-        for(i=0;i<=t.deg;i++)
-            result->koef[i]=result->koef[i]+t.koef[i];
-    }
-    else{                   //если степень второго полинома больше степень первого
-        result=new Polynom(t.deg,t.koef);
-        for(i=0;i<=deg;i++)
-            result->koef[i]=result->koef[i]+koef[i];
-    }
-    result->CorrectDeg();
-    return *result;
-}
- 
-//оператор присваивания
-Polynom Polynom::operator = (const Polynom &t)
-{
-    deg=t.deg;
-    delete[] koef;
-    koef=new double[deg+1];
-    for(int i=0;i<=deg;i++)
-        koef[i]=t.koef[i];
+    n = Object.n;
+          delete []x;
+    x=new double[n+1];
+    for(int i=0;i<=n;)x[i++]=Object.x[i];
     return *this;
 }
-    
  
-//оператор умножения числа на полином
-Polynom operator * (double K, Polynom &t)
-{    
-    return MultConst(K,t);
-}
- 
-//оператор умножения полинома на число
-Polynom operator * (Polynom &t, double K)
+// Перегрузка оператора +
+polynom polynom::operator+(polynom &fp1)
 {
-    return MultConst(K,t);
+    polynom ret;
+    ret=(n>fp1.n)?*this:fp1;
+    int minind=(n>fp1.n)?fp1.n:n;
+ 
+    for(int i=0;i<=minind;ret.x[i++]+=x[i]);
+ 
+    return ret;
 }
  
-//функция реализующая умножение полинома на число
-Polynom MultConst(double K, Polynom &t)
+// Перегрузка оператора -
+polynom polynom::operator-(polynom &fp1)
 {
-    if(K==0){
-        Polynom result;
-        return result;
-    }
-    else{
-        int deg=t.deg;
-        double *tmp_koef=new double[deg+1];
-        for(int i=0;i<=deg;i++)
-            tmp_koef[i]=K*t.koef[i];
-        Polynom result(deg,tmp_koef);
-        delete[] tmp_koef;
-        return result;
-    }
+    polynom ret;
+    int i;
+    ret=(n>fp1.n)?*this:fp1;
+    if(fp1.n>n) for(i=n;i<=ret.n;ret.x[i++]=-ret.x[i]);
+    int minind=(n>fp1.n)?fp1.n:n;
+ 
+    for(i=0;i<=minind;ret.x[i++]=x[i]-fp1.x[i]);
+    return ret;
+ 
 }
  
-// функция корректировки степени полинома: коэффициент 
-// при максимальной степени должен быть ненулевым
-void Polynom::CorrectDeg(){
-    if(koef[deg]==0){
-        do{                                 
-            deg--;
-        }while(deg && koef[deg]==0);
-    }
-}
- 
-//функция ввода полинома
-void Polynom::InputPolynom()
+// Перегрузка оператора *
+polynom polynom::operator*(polynom &fp1)
 {
-    cout << "Input degree: ";
-    cin >> deg;
-    delete[] koef;
-    koef=new double[deg+1];
-    for(int i=0;i<deg;i++)
+    int newindex=fp1.n+n;
+    double *empty=new double[newindex+1];
+    for(int i=0;i<=newindex;empty[i++]=0);
+ 
+    polynom ret(newindex,empty);
+ 
+    for(int i=0;i<=fp1.n;i+=1)
+        for(int j=0;j<=n;j+=1) ret.x[i+j]+=fp1.x[i]*x[j];
+ 
+    return ret;
+ 
+}
+ 
+// Перегрузка оператора >>
+istream &operator>>(istream &fi, polynom &fp)
+{
+    cout<<"n=";
+    fi >> fp.n;
+ 
+    delete []fp.x;
+    fp.x=new double[fp.n+1];
+    for(int i=0;i<=fp.n;)
     {
-        cout << "K" << i << " = ";
-        cin >> koef[i];
+        cout<<"x["<<i<<"]=";
+        fi >> fp.x[i++];
+ 
     }
-    do{
-        cout << "K" << deg << " = ";
-        cin >> koef[deg];
-        if(koef[deg]==0)
-            cout << "K" << deg << " must not be zero!!!\n";
-    }while(!koef[deg]);
+ 
+    return fi;
 }
- //Фунция вывода полинома
-void Polynom::OutputPolynom()
+ 
+// Перегрузка оператора <<
+ostream &operator<<(ostream &fo, polynom &fp)
 {
-    if(koef[deg]==1)
-        cout << "X^" << deg;
-    else if(koef[deg]==-1)
-        cout << "-X^" << deg;
-    else
-        cout << koef[deg] << "X^" << deg;
  
-    for(int i=deg-1;i>0;i--){
-        if(koef[i]>0){
-            if(koef[i]==1)
-                cout << " + " << "X^" << i;
-            else
-                cout << " + " << koef[i] << "X^" << i;
-        }else if(koef[i]<0)
-            if(koef[i]==-1)
-                cout << " - " << "X^" << i;
-            else
-                cout << " - " << (-1)*koef[i] << "X^" << i;
-    }
- 
-    if(koef[0]>0)
-        cout << " + " << koef[0] << "\n";
-    else if(koef[0]<0)
-        cout << " - " << (-1)*koef[0] << "\n";
+    for(int i=0;i<=fp.n;i+=1) fo <<"x["<<i<<"]="<<int(fp.x[i])<<endl;
+    return fo;
 }
-
+ 
 int main(int argc, char *argv[])
 {
-    
-    system("PAUSE");
-    return EXIT_SUCCESS;
+    double x[]={6,3,8};
+ 
+    polynom m1(2,x);
+    cout<<"Перший многочлен:"<<endl;
+    cout<<m1<<endl;
+    cout<<"Введіть другий многочлен:"<<endl;
+    polynom m2;
+    cin>>m2;
+   
+   cout<<endl<<"Сума m1 і m2:"<< endl<< m1+m2<<endl;???? проблема
+ 
+ 
+    getch();
+   cout<<"Різниця m1 і m2:"<<endl<<m1-m2<<endl;???????проблема
+    getch();
+    polynom m3;
+    m3=m1*m2;
+    cout<<"Добуток m1 і m2:"<<endl<<m3<<endl;
+    getch();
+    cout<<"Вільний коефіцієнт добутку m1 і m2: "<<m3.cs()<<endl;
+    m1.~polynom();
+    m2.~polynom();
+    m3.~polynom();        
 }
