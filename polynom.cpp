@@ -149,7 +149,7 @@ int main(int argc, char *argv[])
     m3=m1-m2;
    cout<<"Різниця m1 і m2:"<<endl<<m3<<endl;//???????проблема
     getch();
-    polynom m3;
+    
     m3=m1*m2;
     cout<<"Добуток m1 і m2:"<<endl<<m3<<endl;
     getch();
