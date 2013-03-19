@@ -142,12 +142,12 @@ int main(int argc, char *argv[])
     cin>>m2;
     polynom m3;
     m3=m1+m2;
-    cout<<endl<<"Сума m1 і m2:"<< endl<<m3<<endl;//???? проблема
+    cout<<endl<<"Сума m1 і m2:"<< endl<<m3<<endl;
  
  
     getch();
     m3=m1-m2;
-   cout<<"Різниця m1 і m2:"<<endl<<m3<<endl;//???????проблема
+   cout<<"Різниця m1 і m2:"<<endl<<m3<<endl;
     getch();
     
     m3=m1*m2;
