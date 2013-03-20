@@ -135,25 +135,25 @@ int main(int argc, char *argv[])
     double x[]={6,3,8};
  
     polynom m1(2,x);
-    cout<<"Перший многочлен:"<<endl;
+    cout<<"Pershiy polinom:"<<endl;
     cout<<m1<<endl;
-    cout<<"Введіть другий многочлен:"<<endl;
+    cout<<"Vvedit drugiy polinom:"<<endl;
     polynom m2;
     cin>>m2;
     polynom m3;
     m3=m1+m2;
-    cout<<endl<<"Сума m1 і m2:"<< endl<<m3<<endl;
+    cout<<endl<<"Suma m1 and m2:"<< endl<<m3<<endl;
  
  
     getch();
     m3=m1-m2;
-   cout<<"Різниця m1 і m2:"<<endl<<m3<<endl;
+   cout<<"Riznitsya m1 and m2:"<<endl<<m3<<endl;
     getch();
     
     m3=m1*m2;
-    cout<<"Добуток m1 і m2:"<<endl<<m3<<endl;
+    cout<<"Dobutok m1 and m2:"<<endl<<m3<<endl;
     getch();
-    cout<<"Вільний коефіцієнт добутку m1 і m2: "<<m3.cs()<<endl;
+    cout<<"Vilniy koeficient dobutku m1 і m2: "<<m3.cs()<<endl;
     m1.~polynom();
     m2.~polynom();
     m3.~polynom();        
