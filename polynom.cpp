@@ -129,7 +129,11 @@ ostream &operator<<(ostream &fo, polynom &fp)
     for(int i=0;i<=fp.n;i+=1) fo <<"x["<<i<<"]="<<int(fp.x[i])<<endl;
     return fo;
 }
- 
+ //Знаходження інтегралу від полінома
+polynom polynom :: integrate()
+{
+    ??????????
+}
 int main(int argc, char *argv[])
 {
     double x[]={6,3,8};
