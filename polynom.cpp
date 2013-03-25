@@ -158,27 +158,3 @@ int main(int argc, char *argv[])
     m2.~polynom();
     m3.~polynom();        
 }
-_________________________________________________________Інтеграл
-
-void Polynom(double*x, int n)
-{
-  for(int i=0;i<n;i++)
-    printf("%+f y^%d",*(x+i),n-i-1);
-  printf("n");
-}
-#define N  4  // Степінь полінома
-double*Polynom[N+1]={8,6,4,1,0};
- // 8x^3 + 6x^2 + 4x + 1 = P(x)
-//0 тут означає константу, яка буде в інтегралі I(P)=I+C
-int main(int argc, char *argv[])
-{
-  // відображення даного полвнома
-  Polynom(Polynom,N);
-  // обрахування інтегралу
-  for(int i=0;i<N;i++)
-    Polynom[i]/=(N-i);
-  // відображення результату
-  Polynom(Polynom,N+1);
-}
-  
-
