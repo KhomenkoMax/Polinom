@@ -15,14 +15,14 @@ class polynom
         polynom(int n,double *x);
         double cs();
  
-        polynom &operator=(const polynom &Object); // Ïåðåãðóçêà =
-        polynom operator+(polynom &);    // Ñóìà
-        polynom operator-(polynom &);    // Ð³çíèöÿ
-        polynom operator*(polynom &);    // Ìíîæåííÿ
+        polynom &operator=(const polynom &Object); //Перегрузка=
+        polynom operator+(polynom &);    // Сума
+        polynom operator-(polynom &);    // Різниця
+        polynom operator*(polynom &);    // Добуток
  
-        // Ïåðåãðóçêà îïåðàòîðà << äëÿ âèâîäà
+        // Перегрузка оператора << для вивода 
         friend ostream &operator<<(ostream &, polynom &);
-        // Ïåðåãðóçêà îïåðàòîðà >> äëÿ ââîäà ìàòðèö³(ìàñèâó)
+        // Перегрузка оператора >> для ввода масиву
         friend istream &operator>>(istream &, polynom &);
  
 };
@@ -52,7 +52,7 @@ double polynom::cs()
 }
  
  
-// Ïåðåãðóçêà îïåðàòîðà =
+// Перегрузка оператора =
 polynom& polynom::operator=(const polynom &Object)
 {
     n = Object.n;
@@ -62,7 +62,7 @@ polynom& polynom::operator=(const polynom &Object)
     return *this;
 }
  
-// Ïåðåãðóçêà îïåðàòîðà +
+// Перегрузкаоператора +
 polynom polynom::operator+(polynom &fp1)
 {
     polynom ret;
@@ -74,7 +74,7 @@ polynom polynom::operator+(polynom &fp1)
     return ret;
 }
  
-// Ïåðåãðóçêà îïåðàòîðà -
+// Перегрузка оператора -
 polynom polynom::operator-(polynom &fp1)
 {
     polynom ret;
@@ -88,7 +88,7 @@ polynom polynom::operator-(polynom &fp1)
  
 }
  
-// Ïåðåãðóçêà îïåðàòîðà *
+//Перегрузка оператора *
 polynom polynom::operator*(polynom &fp1)
 {
     int newindex=fp1.n+n;
@@ -104,7 +104,7 @@ polynom polynom::operator*(polynom &fp1)
  
 }
  
-// Ïåðåãðóçêà îïåðàòîðà >>
+// Перегрузка оператора  >>
 istream &operator>>(istream &fi, polynom &fp)
 {
     cout<<"n=";
@@ -122,14 +122,14 @@ istream &operator>>(istream &fi, polynom &fp)
     return fi;
 }
  
-// Ïåðåãðóçêà îïåðàòîðà <<
+// Перегрузка оператора <<
 ostream &operator<<(ostream &fo, polynom &fp)
 {
  
     for(int i=0;i<=fp.n;i+=1) fo <<"x["<<i<<"]="<<int(fp.x[i])<<endl;
     return fo;
 }
- //Çíàõîäæåííÿ ³íòåãðàëó â³ä ïîë³íîìà
+ //Знаходження інтегралу від многочлена
 polynom integrate(const int koefs, const int deg)
 {double mas1[100]; 
  double mas2[100];
