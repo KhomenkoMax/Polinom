@@ -19,6 +19,7 @@ class polynom
         polynom operator+(polynom &);    // Сума
         polynom operator-(polynom &);    // Різниця
         polynom operator*(polynom &);    // Добуток
+		polynom integrate()
  
         // Перегрузка оператора << для вивода 
         friend ostream &operator<<(ostream &, polynom &);
@@ -136,17 +137,37 @@ polynom integrate(const int koefs, const int deg)
  double mas3[100];
  int n;
 for(int i=0;i<=koefs;i++)
-{mas1[i]=koefs;
+{mas1[i]=koefs[i];
   mas2[i+1]=mas1[i];
   }
   for(int i=0;i<=deg;i++)
-  { mas3[i]=mas2[i]/mas1[i-1];
+  { mas3[i]=mas2[i]/(i-1);// /mas1[i-1];
   }
       n=deg+1;                             
 
   cout<<"%lf"<<mas3<<endl;
      
 }
+
+polynom polynom::integrate()
+{double mas1[100]; 
+ double mas2[100];
+ double mas3[100];
+ //int n;
+for(int i=0;i<=n;i++)
+{mas1[i]=x[i];
+  mas2[i+1]=mas1[i];
+  }
+  for(int i=0;i<=n;i++)
+  { mas3[i]=mas2[i]/(i-1);// /mas1[i-1];
+    x[i]=mas3[i];
+  }
+      n++;                             
+
+//  cout<<"%lf"<<mas3<<endl;
+     
+}
+
 int main(int argc, char *argv[])
 {
     double x[]={6,3,8};
@@ -168,6 +189,10 @@ int main(int argc, char *argv[])
     cout<<"Dobutok m1 and m2:"<<endl<<m3<<endl;
     getch();
     cout<<"Vilniy koeficient dobutku m1 ³ m2: "<<m3.cs()<<endl;
+    cout<<"Integral ot  m1 :"<<endl<<m1.integrate()<<endl;
+    getch();
+    
+	
     m1.~polynom();
     m2.~polynom();
     m3.~polynom(); 
