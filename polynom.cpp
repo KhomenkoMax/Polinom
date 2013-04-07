@@ -170,6 +170,10 @@ int main(int argc, char *argv[])
     cout<<"Vilniy koeficient dobutku m1 ³ m2: "<<m3.cs()<<endl;
     m1.~polynom();
     m2.~polynom();
-    m3.~polynom();        
+    m3.~polynom(); 
+    
+system("PAUSE");
+    return EXIT_SUCCESS;
 }
+                           
                                         
