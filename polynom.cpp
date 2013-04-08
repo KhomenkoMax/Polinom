@@ -160,6 +160,7 @@ int main(int argc, char *argv[])
     cin>>m2;
     polynom m3;
     m3=m1+m2;
+    cout<<"Vvedit stepin ta koeficientu polinoma dlya intruvannya:"<<endl;
     polynom m4;
     cin>>m4;
     cout<<endl<<"Suma m1 and m2:"<< endl<<m3<<endl;
