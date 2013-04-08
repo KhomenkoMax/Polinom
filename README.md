@@ -16,3 +16,5 @@ polynom a(mas, 3);
 polynom b;
 b=a.integral();
 b.show();
+
+
