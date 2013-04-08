@@ -19,7 +19,7 @@ class polynom
         polynom operator+(polynom &);    // Сума
         polynom operator-(polynom &);    // Різниця
         polynom operator*(polynom &);    // Добуток
-		polynom integrate()
+	polynom integrate();
  
         // Перегрузка оператора << для вивода 
         friend ostream &operator<<(ostream &, polynom &);
@@ -141,12 +141,10 @@ for(int i=0;i<=n;i++)
   mas2[i+1]=mas1[i];
   }
   for(int i=0;i<=n;i++)
-  { mas3[i]=mas2[i]/(i-1);// /mas1[i-1];
+  { mas3[i]=mas2[i]/(i-1);
     x[i]=mas3[i];
   }
       n++;                             
-
-//  cout<<"%lf"<<mas3<<endl;
      
 }
 
@@ -162,6 +160,8 @@ int main(int argc, char *argv[])
     cin>>m2;
     polynom m3;
     m3=m1+m2;
+    polynom m4;
+    cin>>m4;
     cout<<endl<<"Suma m1 and m2:"<< endl<<m3<<endl;
  getch();
     m3=m1-m2;
@@ -171,7 +171,7 @@ int main(int argc, char *argv[])
     cout<<"Dobutok m1 and m2:"<<endl<<m3<<endl;
     getch();
     cout<<"Vilniy koeficient dobutku m1 ³ m2: "<<m3.cs()<<endl;
-    cout<<"Integral ot  m1 :"<<endl<<m1.integrate()<<endl;
+    cout<<"Integral ot  m1 :"<<endl<<m4<<endl;
     getch();
     
 	
