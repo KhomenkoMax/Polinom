@@ -131,24 +131,6 @@ ostream &operator<<(ostream &fo, polynom &fp)
     return fo;
 }
  //Знаходження інтегралу від многочлена
-polynom integrate(const int koefs, const int deg)
-{double mas1[100]; 
- double mas2[100];
- double mas3[100];
- int n;
-for(int i=0;i<=koefs;i++)
-{mas1[i]=koefs[i];
-  mas2[i+1]=mas1[i];
-  }
-  for(int i=0;i<=deg;i++)
-  { mas3[i]=mas2[i]/(i-1);// /mas1[i-1];
-  }
-      n=deg+1;                             
-
-  cout<<"%lf"<<mas3<<endl;
-     
-}
-
 polynom polynom::integrate()
 {double mas1[100]; 
  double mas2[100];
