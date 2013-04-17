@@ -186,5 +186,29 @@ system("PAUSE");
 }
              
              
+             //Çíàõîäæåííÿ ³íòåãðàëó â³ä ìíîãî÷ëåíà
+polynom polynom::integrate()
+{double mas1[100]; 
+ double mas2[100];
+ double mas3[100];
+ //int n;
+for(int i=0;i<=n;i++)
+{mas1[i]=x[i];
+  mas2[i+1]=mas1[i];
+  }
+  mas2[0]=0;
+      n++;     
+  for(int i=1;i<=n;i++)
+  { mas3[i]=mas2[i]/(i);
+  cout<<"mas3["<<i<<"]="<<mas3[i]<<endl;
+    x[i]=mas3[i];
+    
+  }
+  x[0]=0;
+
+ cout<<"Testing integral:";                             
+ cout<< *this ;
+}
+             
              
                                         
