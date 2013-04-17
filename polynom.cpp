@@ -108,7 +108,7 @@ polynom polynom::operator*(polynom &fp1)
 // Перегрузка оператора  >>
 istream &operator>>(istream &fi, polynom &fp)
 {
-    cout<<"n=";
+    cout<<"Vvedit stepin polinoma n=";
     fi >> fp.n;
  
     delete []fp.x;
