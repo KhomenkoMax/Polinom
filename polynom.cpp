@@ -172,6 +172,7 @@ int main(int argc, char *argv[])
     cout<<"Dobutok m1 and m2:"<<endl<<m3<<endl;
     getch();
     cout<<"Vilniy koeficient dobutku m1³ m2: "<<m3.cs()<<endl;
+     m4.integrate();
     cout<<"Integral ot  m1 :"<<endl<<m4<<endl;
     getch();
     
